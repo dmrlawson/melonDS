@@ -192,7 +192,6 @@ else ifeq ($(platform), libnx)
 # RPi4
 else ifeq ($(platform), rpi4_64)
    CPUFLAGS += -march=armv8-a+crc -mtune=cortex-a72
-   CXXFLAGS := $(ASFLAGS) $(CFLAGS)
    HAVE_THREADS = 1
    HAVE_NEON = 1
    JIT_ARCH = aarch64
