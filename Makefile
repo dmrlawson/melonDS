@@ -189,6 +189,13 @@ else ifeq ($(platform), libnx)
    #JIT_ARCH = aarch64 # TODO: Re-add when armjit memory problems are fixed upstream
 #######################################
 
+# RPi4
+else ifeq ($(platform), rpi4_64)
+   CPUFLAGS += -march=armv8-a+crc -mtune=cortex-a72
+   HAVE_THREADS = 1
+   HAVE_NEON = 1
+   JIT_ARCH = aarch64
+
 # Windows MSVC 2017 all architectures
 else ifneq (,$(findstring windows_msvc2017,$(platform)))
 
