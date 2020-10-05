@@ -79,11 +79,7 @@ ifeq ($(platform), unix)
    LIBS +=-lpthread -lGL
    HAVE_OPENGL=1
    HAVE_THREADS=1
-   ifeq ($(ARCH), aarch64)
-      JIT_ARCH=aarch64
-   else
-      JIT_ARCH=x64
-   endif
+   JIT_ARCH=x64
 else ifeq ($(platform), linux-portable)
    TARGET := $(TARGET_NAME)_libretro.$(EXT)
    fpic := -fPIC -nostdlib
@@ -195,9 +191,16 @@ else ifeq ($(platform), libnx)
 
 # RPi4
 else ifeq ($(platform), rpi4_64)
+   EXT ?= so
    CPUFLAGS += -march=armv8-a+crc -mtune=cortex-a72
-   HAVE_THREADS = 1
    HAVE_NEON = 1
+   TARGET := $(TARGET_NAME)_libretro.$(EXT)
+   fpic := -fPIC
+   SHARED := -shared -Wl,--version-script=$(CORE_DIR)/link.T -Wl,--no-undefined
+   LIBS +=-lpthread -lGL
+   HAVE_OPENGL=0
+   HAVE_THREADS=1
+   JIT_ARCH=aarch64
 
 # Windows MSVC 2017 all architectures
 else ifneq (,$(findstring windows_msvc2017,$(platform)))
